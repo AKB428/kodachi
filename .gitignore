@@ -7,3 +7,6 @@ junk/
 conf/
 local/
 cpanfile.snapshot
+vender/
+.buildpath
+.bundle/
