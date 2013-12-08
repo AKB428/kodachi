@@ -1,10 +1,11 @@
-Yahoo Auction Bot with Twitter
+Yahoo Auction Bot with Twitter (Ruby)
 
 * use
  - Yahoo API
- - Twitter APi
+ - Twitter API
 
 * pre setting
- - install cpanm and carton
+ - install Ruby and Bundler
+ - $bundle install
  - Yahoo Japan Dev account and Twitter Dev account 
 
