@@ -3,6 +3,7 @@ require 'uri'
 require 'json'
 require 'date'
 require 'time'
+require './twitter.rb'
 
 File.open './conf/conf.json' do |file|
    @conf = JSON.load(file.read)
@@ -54,7 +55,12 @@ def get_data(conf, search_target, param)
      tweet_list.push result
   end
 
-  p tweet_list
+  tweet_list.each do |tweet_string|
+    puts tweet_string
+    #ツイート
+    @tw.update tweet_string
+    sleep 10
+  end
 end
 
 def jsonp_decode(jsonp)
