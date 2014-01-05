@@ -5,6 +5,7 @@ setting/
 junk/
 .DS_Store
 conf/
+junk/
 local/
 cpanfile.snapshot
 vender/
