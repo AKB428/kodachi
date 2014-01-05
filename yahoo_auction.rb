@@ -39,14 +39,21 @@ def get_data(conf, search_target, param)
        
      encded_auc_url = URI.escape item["AuctionItemUrl"];
      affi_url = @affiliate_url + encded_auc_url
+
+     sokketu = "即決価格=なし"
+     sokketu = sprintf( "即決価格=%d円", item["BidOrBuy"].to_i ) if item["BidOrBuy"] != nil
+     #sokketu = item["BidOrBuy"].to_s
      
      #rfc3339形式なので変換する
      end_time = Time.parse item["EndTime"]
-     format_end_time = end_time.strftime("%Y年%m月%d日 %H:%M:%S")
-     result = title + bids + affi_url + " " + format_end_time
+     format_end_time = "終了時間=" + end_time.strftime("%Y年%m月%d日 %H:%M:%S")
+     
+     current_price = sprintf( "現在価格=%d円", item["CurrentPrice"].to_i )
+    
+     result = title + " " + bids +  " " + current_price + " " + affi_url + " " + sokketu + " " + format_end_time + " " + search_target[:hash_tag]
      tweet_list.push result
   end
-  
+
   p tweet_list
 end
 
