@@ -58,8 +58,13 @@ def get_data(conf, search_target, param)
   tweet_list.each do |tweet_string|
     puts tweet_string
     #ツイート
-    @tw.update tweet_string
-    sleep 10
+    begin
+      @tw.update tweet_string
+    rescue
+      puts e.to_s
+    ensure
+      sleep 10
+    end
   end
 end
 
