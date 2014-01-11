@@ -31,34 +31,52 @@ affiliate_id = @yahoo_conf["affiliate_id"]
 
 application_key = @yahoo_conf["application_key"]
 
-search_param = {appid: application_key, query: "一眼" , sort: "bids", order: "a", page: "1"} 
+search_param = {appid: application_key, query: "一眼" , sort: "bids", order: "a"} 
 
 
 def get_data(param)
   result_count_save_flag = false
+  read_next_page_flag = true
+  page_counter = 0
   
-  res = Net::HTTP.post_form(URI.parse(@yahoo_url), param)
-  result = jsonp_decode res.body
-  
-  #"totalResultsAvailable：該当件数の総個数です。
-  #"totalResultsReturned：返された値の個数です。
-  #"firstResultPosition：最初のデータが何個目に当たるかです。
-  #/ResultSet/Result/UnitsWord  関連検索ワードです。（最大5件）
-  unless result_count_save_flag
-    main_obj = {
-      "timestamp" => Time.now, 
-      "attributes" => result["ResultSet"]['@attributes'],
-      "UnitsWord" => result["ResultSet"]["Result"]["UnitsWord"],
-    }
-    @main_collection.insert(main_obj)
-    result_count_save_flag = true
-  end
-  
-  item_list = result["ResultSet"]["Result"]["Item"]
-   
-  item_list.each do |item|
-     #mongoDBに挿入
-     @data_collection.insert(item) if @mongo_conf["exec"]
+  while (read_next_page_flag)
+    page_counter+=1
+    puts "page " + page_counter.to_s
+    param["page"] = page_counter.to_s
+    res = Net::HTTP.post_form(URI.parse(@yahoo_url), param)
+    result = jsonp_decode res.body
+    
+    #"totalResultsAvailable：該当件数の総個数です。
+    #"totalResultsReturned：返された値の個数です。
+    #"firstResultPosition：最初のデータが何個目に当たるかです。
+    #/ResultSet/Result/UnitsWord  関連検索ワードです。（最大5件）
+    unless result_count_save_flag
+      main_obj = {
+        "timestamp" => Time.now, 
+        "attributes" => result["ResultSet"]['@attributes'],
+        "UnitsWord" => result["ResultSet"]["Result"]["UnitsWord"],
+      }
+      @main_collection.insert(main_obj)
+      result_count_save_flag = true
+    end
+    
+    item_list = result["ResultSet"]["Result"]["Item"]
+     
+    item_list.each do |item|
+       #mongoDBに挿入
+       @data_collection.insert(item) if @mongo_conf["exec"]
+    end
+    
+    total = result["ResultSet"]['@attributes']['totalResultsAvailable'].to_i
+    first = result["ResultSet"]['@attributes']['firstResultPosition'].to_i
+    unit_result = result["ResultSet"]['@attributes']['totalResultsReturned'].to_i
+    now_unit_position =  first + unit_result
+    
+    puts "total=" + total.to_s + "now position=" + now_unit_position.to_s
+    
+    if total <= now_unit_position
+      read_next_page_flag = false
+    end   
   end
 end
 
