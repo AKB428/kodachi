@@ -3,7 +3,18 @@ require 'uri'
 require 'json'
 require 'date'
 require 'time'
-require './twitter.rb'
+require "pry"
+
+#not tweet 
+#bundle exec ruby yahoo_auction.rb -nt
+@twitter_flag = true
+if ARGV[0] == "-nt"
+  @twitter_flag = false
+end
+
+if @twitter_flag
+  require './twitter.rb'
+end
 
 File.open './conf/conf.json' do |file|
    @conf = JSON.load(file.read)
@@ -57,16 +68,21 @@ def get_data(conf, search_target, param)
 
   tweet_list.each do |tweet_string|
     puts tweet_string
-    puts "try catch start"
+    #puts "try catch start"
     #ツイート
+    #binding.pry
     begin
-      @tw.update tweet_string
-      puts "tweet!!!!!"
+      if @twitter_flag
+        @tw.update tweet_string
+        puts "tweet!!!!!"
+      end
     rescue
       puts e.to_s
     ensure
-      puts "sleep 10"
-      sleep 10
+      if @twitter_flag
+        puts "sleep 10"
+        sleep 10
+      end
     end
   end
 end
