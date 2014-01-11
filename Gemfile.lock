@@ -4,6 +4,8 @@ GEM
     addressable (2.3.5)
     atomic (1.1.14)
     bson (1.9.2)
+    bson_ext (1.9.2)
+      bson (~> 1.9.2)
     buftok (0.2.0)
     coderay (1.1.0)
     descendants_tracker (0.0.3)
@@ -44,6 +46,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bson_ext
   mongo
   pry
   twitter

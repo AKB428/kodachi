@@ -8,5 +8,10 @@
 	"YahooJapan" : {
 		"affiliate_id" : "",
 		"application_key" : ""
+	},
+	"MongoDB" : {
+		"exec" : false,
+		"database" : "yahoo_auction",
+		"collection" : "search_result"
 	}
 }
