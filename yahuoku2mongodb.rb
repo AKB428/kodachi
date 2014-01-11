@@ -1,7 +1,7 @@
 ##############################################
 # Simple Yahoo Auction(JP) Data to MongoDB
 # 
-# 
+# bundle exec ruby yahuoku2mongodb.rb
 ###############################################
 
 require 'net/http'
@@ -31,8 +31,8 @@ affiliate_id = @yahoo_conf["affiliate_id"]
 
 application_key = @yahoo_conf["application_key"]
 
-search_param = {appid: application_key, query: "一眼" , sort: "bids", order: "a"} 
-
+#search_param = {appid: application_key, query: "一眼" , sort: "bids", order: "a"} 
+search_param = {appid: application_key, query: "コミケ"} 
 
 def get_data(param)
   result_count_save_flag = false
@@ -79,6 +79,10 @@ def get_data(param)
     end   
   end
 end
+
+#１万件数あったら 500リクエスト
+#page 511
+#total=10219now position=10220
 
 def jsonp_decode(jsonp)
   #JSONP形式なのでJSON形式にする
