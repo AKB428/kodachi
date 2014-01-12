@@ -12,6 +12,7 @@
 	"MongoDB" : {
 		"exec" : false,
 		"database" : "yahoo_auction",
+		"main_collection" : "main_result",
 		"collection" : "search_result"
 	}
 }
