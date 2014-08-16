@@ -88,14 +88,14 @@ def get_data(search_target, param)
     @mongo_collection.insert(item) if @mongo_conf["exec"]
   end
 
-  tweet_list.each do |tweet_string|
-    p tweet_string
+  tweet_list.each do |tweet_data|
+    p tweet_data
     #puts "try catch start"
     #ツイート
     #binding.pry
     begin
       if @twitter_flag
-        @tw.update tweet_string["tweet_msg"]
+        @tw.update_with_media(tweet_data["tweet_msg"], File.new(tweet_data["media"]))
         puts "tweet!!!!!"
       end
     rescue

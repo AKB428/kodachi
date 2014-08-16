@@ -29,7 +29,6 @@ module DownloadMedia
     response = http_conn.get url
     File.open(download_file_path, 'wb') { |fp| fp.write(response.body) }
 
-    puts download_file_path.to_s
     download_file_path.to_s
   end
 end
