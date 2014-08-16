@@ -5,6 +5,7 @@ setting/
 junk/
 .DS_Store
 conf/conf.json
+conf/search_param.json
 junk/
 local/
 cpanfile.snapshot
