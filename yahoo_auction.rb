@@ -3,11 +3,30 @@ require 'uri'
 require 'json'
 require 'date'
 require 'time'
-require './twitter.rb'
+require "pry"
+require 'mongo'
+
+#not tweet 
+#bundle exec ruby yahoo_auction.rb -nt
+@twitter_flag = true
+if ARGV[0] == "-nt"
+  @twitter_flag = false
+end
+
+if @twitter_flag
+  require './twitter.rb'
+end
 
 File.open './conf/conf.json' do |file|
    @conf = JSON.load(file.read)
    @yahoo_conf = @conf["YahooJapan"]
+   @mongo_conf = @conf["MongoDB"]
+end
+
+if @mongo_conf["exec"]
+  mongo_con = Mongo::Connection.new
+  mongo_db = mongo_con[@mongo_conf["database"]]
+  @mongo_collection = mongo_db[@mongo_conf["collection"]]
 end
 
 @yahoo_url = 'http://auctions.yahooapis.jp/AuctionWebService/V2/json/search'
@@ -28,6 +47,7 @@ def get_data(conf, search_target, param)
   p param
   res = Net::HTTP.post_form(URI.parse(@yahoo_url), param)
   result = jsonp_decode res.body
+  
   item_list = result["ResultSet"]["Result"]["Item"]
   #p item_list
     
@@ -53,20 +73,28 @@ def get_data(conf, search_target, param)
     
      result = title + " " + bids +  " " + current_price + " " + affi_url + " " + sokketu + " " + format_end_time + " " + search_target[:hash_tag]
      tweet_list.push result
+     
+     #mongoDBに挿入
+     @mongo_collection.insert(item) if @mongo_conf["exec"]
   end
 
   tweet_list.each do |tweet_string|
     puts tweet_string
-    puts "try catch start"
+    #puts "try catch start"
     #ツイート
+    #binding.pry
     begin
-      @tw.update tweet_string
-      puts "tweet!!!!!"
+      if @twitter_flag
+        @tw.update tweet_string
+        puts "tweet!!!!!"
+      end
     rescue
       puts e.to_s
     ensure
-      puts "sleep 10"
-      sleep 10
+      if @twitter_flag
+        puts "sleep 10"
+        sleep 10
+      end
     end
   end
 end
@@ -76,7 +104,6 @@ def jsonp_decode(jsonp)
   result_jsonp = jsonp.sub /^loaded\((?<json>.*)\)$/, '\k<json>'
   result = JSON.load(result_jsonp)
 end
-
 
 get_data(@yahoo_conf, search_target, search_param1)
 

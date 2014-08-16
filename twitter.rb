@@ -15,4 +15,5 @@ File.open './conf/conf.json' do |file|
   )
   #p @tw
   #@tw.update "日本語"
+  puts "load Twitter"
 end
