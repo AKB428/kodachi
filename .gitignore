@@ -11,3 +11,4 @@ cpanfile.snapshot
 vender/
 .buildpath
 .bundle/
+.idea/
