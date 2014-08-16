@@ -45,7 +45,7 @@ affiliate_id = @yahoo_conf["affiliate_id"]
 
 max = 10
 #1回のツイートで間隔をあける秒数
-tweet_sleep_time = 10
+@tweet_sleep_time = 10
 
 def get_data(search_target, param)
   res = Net::HTTP.post_form(URI.parse(@yahoo_url), param)
@@ -75,12 +75,12 @@ def get_data(search_target, param)
 
     #rfc3339形式なので変換する
     end_time = Time.parse item["EndTime"]
-    format_end_time = "終了時間=" + end_time.strftime("%Y年%m月%d日 %H:%M:%S")
+    format_end_time = "終了=" + end_time.strftime("%Y年%m月%d日 %H:%M:%S")
 
     current_price = sprintf( "現在価格=%d円", item["CurrentPrice"].to_i )
 
-    result = title + " " + bids +  " " + current_price + " " + affi_url + " " + sokketu + " " + format_end_time + " " + search_target["hash_tag"]
-
+    #result = title + " " + bids +  " " + current_price + " " + affi_url + " " + sokketu + " " + format_end_time + " " + search_target["hash_tag"]
+    result = title + " " + bids +  " " + current_price + " " + affi_url + format_end_time + " " + search_target["hash_tag"]
     tweet_list.push({"tweet_msg" => result, "media" => download_image(image1)})
 
 
@@ -98,12 +98,12 @@ def get_data(search_target, param)
         @tw.update_with_media(tweet_data["tweet_msg"], File.new(tweet_data["media"]))
         puts "tweet!!!!!"
       end
-    rescue
+    rescue => e
       puts e.to_s
     ensure
       if @twitter_flag
-        puts "sleep " + tweet_sleep_time.to_s
-        sleep tweet_sleep_time
+        puts "sleep " + @tweet_sleep_time.to_s
+        sleep @tweet_sleep_time
       end
     end
   end
