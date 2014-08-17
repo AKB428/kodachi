@@ -81,7 +81,7 @@ def get_data(search_target, param)
 
     #result = title + " " + bids +  " " + current_price + " " + affi_url + " " + sokketu + " " + format_end_time + " " + search_target["hash_tag"]
     result = title + " " + bids +  " " + current_price + " " + affi_url + format_end_time + " " + search_target["hash_tag"]
-    tweet_list.push({"tweet_msg" => result, "media" => download_image(image1)})
+    tweet_list.push({"tweet_msg" => result, "media" => image1 ? download_image(image1) : nil })
 
 
     #mongoDBに挿入
@@ -95,7 +95,11 @@ def get_data(search_target, param)
     #binding.pry
     begin
       if @twitter_flag
-        @tw.update_with_media(tweet_data["tweet_msg"], File.new(tweet_data["media"]))
+        if tweet_data["media"]
+         @tw.update_with_media(tweet_data["tweet_msg"], File.new(tweet_data["media"]))
+        else
+         @tw.update(tweet_data["tweet_msg"])
+        end
         puts "tweet!!!!!"
       end
     rescue => e
