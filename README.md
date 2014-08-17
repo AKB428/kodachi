@@ -13,7 +13,7 @@ Yahoo APIとTwitter APIを使用します。
 ## 環境設定
  - RubyとBundlerをインストール
  - bundle install
- - conf/conf.json.sample を conf/conf.sampleにコピーして適切な設定を記述
+ - conf/conf.json.sample を conf/conf.jsonにコピーして適切な設定を記述
  - conf/search_param.json.sample を conf/search_param.json にコピーして適切な設定を記述
  
 
