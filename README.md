@@ -7,15 +7,13 @@ Yahoo APIとTwitter APIを使用します。
 
 
 ## 事前準備
- - Yahoo Developer アカウント
+ - Yahoo Developer アカウント取得
  - Twitter アプリケーション登録
 
 ## 環境設定
  - RubyとBundlerをインストール
  - bundle install
- - conf/conf.json.sample を conf/conf.jsonにコピーして適切な設定を記述
- - conf/search_param.json.sample を conf/search_param.json にコピーして適切な設定を記述
- 
+ - conf/conf.sample.json を conf/conf.jsonにコピーして適切な設定を記述
 
 ## 起動
 
@@ -25,12 +23,29 @@ Yahoo APIとTwitter APIを使用します。
  bundle exec ruby yahoo_auction.rb
 ```
 
-バッチとしてループする: cronせずプログラムでとりあえずループする場合
+単発起動: 設定ファイルを指定
 
 ```
- bundle exec ruby loop.rb
+ bundle exec ruby yahoo_auction.rb -c conf/conf_kankore.json
 ```
 
+バッチとしてループする: cronせずプログラムでとりあえずループする場合 (第一引数に起動間隔を分で指定)
+
+```
+ bundle exec ruby loop.rb 60
+```
+
+バッチとしてループする: 設定ファイルを指定　(起動は30分間隔)
+
+```
+ bundle exec ruby loop.rb 30 -c conf/conf_kankore.json
+```
+
+（テスト用）:ツイッターにツイートしない
+
+```
+bundle exec ruby yahoo_auction.rb -n
+```
 
 ## 注意点
 

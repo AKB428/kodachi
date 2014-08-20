@@ -14,5 +14,12 @@
 		"database" : "yahoo_auction",
 		"main_collection" : "main_result",
 		"collection" : "search_result"
+	},
+	"YahooAuctionSearch" : {
+	    "search_target" : {"hash_tag" : "#一眼レフ"},
+        "search_params" : [
+            {"query": "一眼" , "sort": "bids", "order": "a", "page": "1"},
+            {"query": "一眼" , "order": "a", "page": "1"}
+        ]
 	}
 }
