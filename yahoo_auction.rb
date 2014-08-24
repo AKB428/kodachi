@@ -7,6 +7,7 @@ require "pry"
 require 'mongo'
 require 'optparse'
 require './lib/download_media'
+require 'twitter'
 
 include DownloadMedia
 
