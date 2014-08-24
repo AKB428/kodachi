@@ -6,7 +6,7 @@ require 'time'
 require "pry"
 require 'mongo'
 require 'optparse'
-
+require './twitter.rb'
 require './lib/download_media'
 
 include DownloadMedia
@@ -20,15 +20,15 @@ opt.on('-c CONF_FILE_PATH', 'conf_file_path') {|v| conf_file_path = v }
 opt.on('-nt', 'not tweet') {@twitter_flag = false}
 opt.parse!(ARGV)
 
-if @twitter_flag
-  require './twitter.rb'
-end
 
 File.open conf_file_path do |file|
   @conf = JSON.load(file.read)
   @yahoo_conf = @conf["YahooJapan"]
   @mongo_conf = @conf["MongoDB"]
   @yahoo_auction_search = @conf["YahooAuctionSearch"]
+  if @twitter_flag
+    @tw = TwitterClient.new(@conf["Twitter"])
+  end
 end
 
 if @mongo_conf["exec"]
