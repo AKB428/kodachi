@@ -20,8 +20,6 @@ opt.on('-c CONF_FILE_PATH', 'conf_file_path') {|v| conf_file_path = v }
 opt.on('-nt', 'not tweet') {@twitter_flag = false}
 opt.parse!(ARGV)
 
-exit;
-
 if @twitter_flag
   require './twitter.rb'
 end
