@@ -16,9 +16,11 @@ conf_file_path = './conf/conf.json'
 
 opt = OptionParser.new
 Version = "1.0.0"
-opt.on('-c CONF_FILE_PATH', '-c [conf_file_path]') {|v| conf_file_path = v }
+opt.on('-c CONF_FILE_PATH', 'conf_file_path') {|v| conf_file_path = v }
 opt.on('-nt', 'not tweet') {@twitter_flag = false}
 opt.parse!(ARGV)
+
+exit;
 
 if @twitter_flag
   require './twitter.rb'
