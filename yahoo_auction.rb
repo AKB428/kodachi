@@ -12,11 +12,11 @@ require './lib/download_media'
 include DownloadMedia
 
 @twitter_flag = true
-conf_file = './conf/conf.json'
+conf_file_path = './conf/conf.json'
 
 opt = OptionParser.new
 Version = "1.0.0"
-opt.on('-c CONF_FILE_PATH', '-c [conf_file_path]') {|v| conf_file = v }
+opt.on('-c CONF_FILE_PATH', '-c [conf_file_path]') {|v| conf_file_path = v }
 opt.on('-nt', 'not tweet') {@twitter_flag = false}
 opt.parse!(ARGV)
 
@@ -24,7 +24,7 @@ if @twitter_flag
   require './twitter.rb'
 end
 
-File.open conf_file do |file|
+File.open conf_file_path do |file|
   @conf = JSON.load(file.read)
   @yahoo_conf = @conf["YahooJapan"]
   @mongo_conf = @conf["MongoDB"]
