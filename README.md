@@ -29,7 +29,7 @@ Yahoo APIとTwitter APIを使用します。
  bundle exec ruby yahoo_auction.rb -c conf/conf_kankore.json
 ```
 
-バッチとしてループする: cronせずプログラムでとりあえずループする場合 (第一引数に起動間隔を分で指定)
+バッチとしてループする: cronせずプログラムでとりあえずループする場合 (第一引数に起動間隔を60分で指定)
 
 ```
  bundle exec ruby loop.rb 60
@@ -44,7 +44,7 @@ Yahoo APIとTwitter APIを使用します。
 （テスト用）:ツイッターにツイートしない
 
 ```
-bundle exec ruby yahoo_auction.rb -n
+bundle exec ruby yahoo_auction.rb -nt
 ```
 
 ## 注意点

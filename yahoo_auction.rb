@@ -5,29 +5,30 @@ require 'date'
 require 'time'
 require "pry"
 require 'mongo'
+require 'optparse'
 
 require './lib/download_media'
 
 include DownloadMedia
 
-#not tweet 
-#bundle exec ruby yahoo_auction.rb -nt
-
-
-
 @twitter_flag = true
-if ARGV[0] == "-nt"
-  @twitter_flag = false
-end
+conf_file = './conf/conf.json'
+
+opt = OptionParser.new
+Version = "1.0.0"
+opt.on('-c CONF_FILE_PATH', '-c [conf_file_path]') {|v| conf_file = v }
+opt.on('-nt', 'not tweet') {@twitter_flag = false}
+opt.parse!(ARGV)
 
 if @twitter_flag
   require './twitter.rb'
 end
 
-File.open './conf/conf.json' do |file|
+File.open conf_file do |file|
   @conf = JSON.load(file.read)
   @yahoo_conf = @conf["YahooJapan"]
   @mongo_conf = @conf["MongoDB"]
+  @yahoo_auction_search = @conf["YahooAuctionSearch"]
 end
 
 if @mongo_conf["exec"]
@@ -81,7 +82,7 @@ def get_data(search_target, param)
 
     #result = title + " " + bids +  " " + current_price + " " + affi_url + " " + sokketu + " " + format_end_time + " " + search_target["hash_tag"]
     result = title + " " + bids +  " " + current_price + " " + affi_url + format_end_time + " " + search_target["hash_tag"]
-    tweet_list.push({"tweet_msg" => result, "media" => image1 ? download_image(image1) : nil })
+    tweet_list.push({"tweet_msg" => result, "media" => image1 ? download_image(image1, @yahoo_auction_search["mdeia_folder"]) : nil })
 
 
     #mongoDBに挿入
@@ -124,13 +125,11 @@ def jsonp_decode(jsonp)
   result = JSON.load(result_jsonp)
 end
 
-File.open './conf/search_param.json' do |file|
-  search_param = JSON.load(file.read)
-  @search_target = search_param["search_target"]
-  @search_params = search_param["search_params"]
-end
 
-@search_params.each do |search_param|
+search_target = @yahoo_auction_search["search_target"]
+search_params = @yahoo_auction_search["search_params"]
+
+search_params.each do |search_param|
   search_param['appid'] = @application_key
-  get_data(@search_target, search_param)
+  get_data(search_target, search_param)
 end
