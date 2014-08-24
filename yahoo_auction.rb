@@ -6,7 +6,6 @@ require 'time'
 require "pry"
 require 'mongo'
 require 'optparse'
-require './twitter.rb'
 require './lib/download_media'
 
 include DownloadMedia
@@ -27,7 +26,13 @@ File.open conf_file_path do |file|
   @mongo_conf = @conf["MongoDB"]
   @yahoo_auction_search = @conf["YahooAuctionSearch"]
   if @twitter_flag
-    @tw = TwitterClient.new(@conf["Twitter"])
+    twitter_conf = @conf["Twitter"]
+    @tw = Twitter::REST::Client.new(
+        :consumer_key => twitter_conf["consumer_key"],
+        :consumer_secret => twitter_conf["consumer_secret"],
+        :oauth_token => twitter_conf["access_token"],
+        :oauth_token_secret => twitter_conf["access_token_secret"]
+    )
   end
 end
 
@@ -97,9 +102,9 @@ def get_data(search_target, param)
     begin
       if @twitter_flag
         if tweet_data["media"]
-         @tw.update_with_media(tweet_data["tweet_msg"], File.new(tweet_data["media"]))
+          @tw.update_with_media(tweet_data["tweet_msg"], File.new(tweet_data["media"]))
         else
-         @tw.update(tweet_data["tweet_msg"])
+          @tw.update(tweet_data["tweet_msg"])
         end
         puts "tweet!!!!!"
       end
