@@ -82,7 +82,7 @@ def get_data(search_target, param)
 
     #result = title + " " + bids +  " " + current_price + " " + affi_url + " " + sokketu + " " + format_end_time + " " + search_target["hash_tag"]
     result = title + " " + bids +  " " + current_price + " " + affi_url + format_end_time + " " + search_target["hash_tag"]
-    tweet_list.push({"tweet_msg" => result, "media" => image1 ? download_image(image1, @yahoo_auction_search["mdeia_folder"]) : nil })
+    tweet_list.push({"tweet_msg" => result, "media" => image1 ? download_image(image1, search_target["mdeia_folder"]) : nil })
 
 
     #mongoDBに挿入
