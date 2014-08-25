@@ -1,8 +1,5 @@
-counter = 0
+sleep_minute = ARGV.shift.to_i
 while (true) do
-        counter+=1
-        puts counter
-        sleep_minute = ARGV.shift.to_i
-        system "bundle exec ruby yahoo_auction.rb " + ARGV.join(" ")
+        puts "bundle exec ruby yahoo_auction.rb " + ARGV.join(" ")
         sleep(sleep_minute * 60)#60*60
 end
