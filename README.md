@@ -69,8 +69,10 @@ cp /config/schedule.rb private/schedule_hogehoge.rb
 cronに登録
 
 ```
-whenever -w
+whenever -f private/schedule_hogehoge.rb
 ```
+
+出力された設定をcrontabにコピーする
 
 
 ## 注意点
