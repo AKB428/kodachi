@@ -1,4 +1,6 @@
-#Yahoo Auction Bot with Twitter (Ruby)
+#Kodachi-小太刀
+
+Yahoo Auction Bot with Twitter (Ruby)
 
 ## 概要
 Yahooオークションから指定した商品を検索しTwitterにBotとして流すツールです
@@ -46,6 +48,30 @@ Yahoo APIとTwitter APIを使用します。
 ```
 bundle exec ruby yahoo_auction.rb -nt
 ```
+
+## wheneverを使ってcronに設定する
+
+```
+./setup.sh
+```
+
+```
+vi /config/schedule.rb
+```
+
+もしくはコピーして編集する
+
+```
+mkdir private
+cp /config/schedule.rb private/schedule_hogehoge.rb
+```
+
+cronに登録
+
+```
+whenever -w
+```
+
 
 ## 注意点
 

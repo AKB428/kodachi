@@ -6,3 +6,5 @@ gem "pry"
 gem "mongo"
 gem 'bson_ext'
 gem 'faraday'
+gem 'whenever', :require => false
+
