@@ -56,7 +56,7 @@ bundle exec ruby yahoo_auction.rb -nt
 ```
 
 ```
-vi /config/schedule.rb
+vi ./config/schedule.rb
 ```
 
 もしくはコピーして編集する
@@ -72,7 +72,13 @@ cronに登録
 whenever -f private/schedule_hogehoge.rb
 ```
 
-出力された設定をcrontabにコピーする
+上記で出力された設定をcrontabにコピーする
+
+crontabを全上書きしたい場合は以下
+
+```
+whenever -w -f private/schedule.rb 
+```
 
 
 ## 注意点
