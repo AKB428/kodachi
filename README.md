@@ -43,10 +43,16 @@ Yahoo APIとTwitter APIを使用します。
  bundle exec ruby loop.rb 30 -c conf/conf_kankore.json
 ```
 
-（テスト用）:ツイッターにツイートしない
+（テスト用）:-n ツイッターにツイートしない
 
 ```
-bundle exec ruby yahoo_auction.rb -nt
+bundle exec ruby yahoo_auction.rb -n
+```
+
+（開発用）:-d デバッグプリント (用途=YahooオークションAPIの結果の中身を確認する)
+
+```
+bundle exec ruby yahoo_auction.rb -d -n
 ```
 
 ## wheneverを使ってcronに設定する

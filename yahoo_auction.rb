@@ -8,16 +8,19 @@ require 'mongo'
 require 'optparse'
 require './lib/download_media'
 require 'twitter'
+require 'pp'
 
 include DownloadMedia
 
 @twitter_flag = true
+@debug_flag = false
 conf_file_path = './conf/conf.json'
 
 opt = OptionParser.new
 Version = "1.0.0"
 opt.on('-c CONF_FILE_PATH', 'conf_file_path') {|v| conf_file_path = v }
-opt.on('-nt', 'not tweet') {@twitter_flag = false}
+opt.on('-n', 'not tweet') {@twitter_flag = false}
+opt.on('-d', 'debug print') {@debug_flag = true}
 opt.parse!(ARGV)
 
 
@@ -64,6 +67,9 @@ def get_data(search_target, param)
 
   tweet_list = []
   item_list.each do |item|
+
+    pp item if @debug_flag
+
     detail =  get_detail(item["AuctionID"])
 
     image1 =  detail["ResultSet"]["Result"]["Img"]["Image1"]
