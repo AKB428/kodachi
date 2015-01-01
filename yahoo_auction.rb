@@ -101,7 +101,9 @@ def get_data(search_target, param, tweet_max)
   end
 
   tweet_list.each.with_index(1) do |tweet_data, index|
-    p tweet_data
+    #p index
+    #p tweet_max
+    #p tweet_data
     #puts "try catch start"
     #ツイート
     #binding.pry
@@ -140,9 +142,9 @@ end
 
 search_target = @yahoo_auction_search["search_target"]
 search_params = @yahoo_auction_search["search_params"]
-tweet_max = @yahoo_auction_search["tweet_max"] 
+tweet_max = @yahoo_auction_search["tweet_max"]
 
-search_params.each do |search_param|
+search_params.each.with_index do |search_param, index|
   search_param['appid'] = @application_key
-  get_data(search_target, search_param, tweet_max ? tweet_max : 20)
+  get_data(search_target, search_param, tweet_max ? tweet_max[index] : 20)
 end

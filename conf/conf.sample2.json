@@ -20,10 +20,11 @@
             "mdeia_folder" : "trend",
             "hash_tag" : "#lovelive"
         },
+        "tweet_max" : [13, 13, 13],
         "search_params" : [
-            {"query": "C87 (ゴリラ仮面 高機動プリン体 薬用石鹸)" , "sort": "bids", "order": "a", "page": "1", "tweet_max": 13},
-            {"query": "神田明神" , "sort": "bids", "affiliate": "d", "page": "1", "tweet_max": 13},
-            {"query": "ラブライブ 全巻 特典 CD" , "sort": "bids", "affiliate": "d", "page": "1", "tweet_max": 13}
+            {"query": "C87 (ゴリラ仮面 高機動プリン体 薬用石鹸)" , "sort": "bids", "order": "a", "page": "1"},
+            {"query": "神田明神" , "sort": "bids", "affiliate": "d", "page": "1"},
+            {"query": "ラブライブ 全巻 特典 CD" , "sort": "bids", "affiliate": "d", "page": "1"}
         ]
        }
 }
