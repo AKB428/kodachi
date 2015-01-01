@@ -53,11 +53,10 @@ affiliate_id = @yahoo_conf["affiliate_id"]
 
 @application_key = @yahoo_conf["application_key"]
 
-max = 10
 #1回のツイートで間隔をあける秒数
 @tweet_sleep_time = 10
 
-def get_data(search_target, param)
+def get_data(search_target, param, tweet_max)
   res = Net::HTTP.post_form(URI.parse(@yahoo_url), param)
   result = jsonp_decode res.body
 
@@ -101,7 +100,7 @@ def get_data(search_target, param)
     @mongo_collection.insert(item) if @mongo_conf["exec"]
   end
 
-  tweet_list.each do |tweet_data|
+  tweet_list.each.with_index(1) do |tweet_data, index|
     p tweet_data
     #puts "try catch start"
     #ツイート
@@ -123,6 +122,7 @@ def get_data(search_target, param)
         sleep @tweet_sleep_time
       end
     end
+    break if index == tweet_max
   end
 end
 
@@ -140,8 +140,9 @@ end
 
 search_target = @yahoo_auction_search["search_target"]
 search_params = @yahoo_auction_search["search_params"]
+tweet_max = @yahoo_auction_search["tweet_max"] 
 
 search_params.each do |search_param|
   search_param['appid'] = @application_key
-  get_data(search_target, search_param)
+  get_data(search_target, search_param, tweet_max ? tweet_max : 20)
 end

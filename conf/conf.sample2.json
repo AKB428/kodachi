@@ -1,0 +1,29 @@
+{
+	"Twitter" : {
+		"consumer_key" : "",
+		"consumer_secret" : "",
+		"access_token" : "",
+		"access_token_secret" : ""
+	},
+	"YahooJapan" : {
+		"affiliate_id" : "",
+		"application_key" : ""
+	},
+	"MongoDB" : {
+		"exec" : false,
+		"database" : "yahoo_auction",
+		"main_collection" : "main_result",
+		"collection" : "search_result"
+	},
+	"YahooAuctionSearch" : {
+	    "search_target" : {
+            "mdeia_folder" : "trend",
+            "hash_tag" : "#lovelive"
+        },
+        "search_params" : [
+            {"query": "C87 (ゴリラ仮面 高機動プリン体 薬用石鹸)" , "sort": "bids", "order": "a", "page": "1", "tweet_max": 13},
+            {"query": "神田明神" , "sort": "bids", "affiliate": "d", "page": "1", "tweet_max": 13},
+            {"query": "ラブライブ 全巻 特典 CD" , "sort": "bids", "affiliate": "d", "page": "1", "tweet_max": 13}
+        ]
+       }
+}
