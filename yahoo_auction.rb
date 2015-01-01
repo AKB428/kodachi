@@ -101,9 +101,9 @@ def get_data(search_target, param, tweet_max)
   end
 
   tweet_list.each.with_index(1) do |tweet_data, index|
-    #p index
-    #p tweet_max
-    #p tweet_data
+    p index
+    p tweet_max
+    p tweet_data
     #puts "try catch start"
     #ツイート
     #binding.pry
