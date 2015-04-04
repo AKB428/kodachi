@@ -79,7 +79,9 @@ def get_data(search_target, param, tweet_max)
     bids = "入札数=" + bids
 
     encded_auc_url = URI.escape item["AuctionItemUrl"];
-    affi_url = @affiliate_url + encded_auc_url
+    #affi_url = @affiliate_url + encded_auc_url
+    #TODO 2015/3/31にアフィ終わったのでURLを一時的につかわない    
+    affi_url = encded_auc_url
 
     sokketu = "即決価格=なし"
     sokketu = sprintf( "即決価格=%d円", item["BidOrBuy"].to_i ) if item["BidOrBuy"] != nil
